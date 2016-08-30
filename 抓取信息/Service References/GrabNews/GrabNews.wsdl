@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="News">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dt">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TOImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="imgBytesIn" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="filename" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TOImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TOImageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="NewsSoapIn">
+    <wsdl:part name="parameters" element="tns:News" />
+  </wsdl:message>
+  <wsdl:message name="NewsSoapOut">
+    <wsdl:part name="parameters" element="tns:NewsResponse" />
+  </wsdl:message>
+  <wsdl:message name="TOImageSoapIn">
+    <wsdl:part name="parameters" element="tns:TOImage" />
+  </wsdl:message>
+  <wsdl:message name="TOImageSoapOut">
+    <wsdl:part name="parameters" element="tns:TOImageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GrabNewsSoap">
+    <wsdl:operation name="News">
+      <wsdl:input message="tns:NewsSoapIn" />
+      <wsdl:output message="tns:NewsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TOImage">
+      <wsdl:input message="tns:TOImageSoapIn" />
+      <wsdl:output message="tns:TOImageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GrabNewsSoap" type="tns:GrabNewsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="News">
+      <soap:operation soapAction="http://tempuri.org/News" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TOImage">
+      <soap:operation soapAction="http://tempuri.org/TOImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GrabNewsSoap12" type="tns:GrabNewsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="News">
+      <soap12:operation soapAction="http://tempuri.org/News" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TOImage">
+      <soap12:operation soapAction="http://tempuri.org/TOImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GrabNews">
+    <wsdl:port name="GrabNewsSoap" binding="tns:GrabNewsSoap">
+      <soap:address location="http://localhost:5888/GrabNews.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GrabNewsSoap12" binding="tns:GrabNewsSoap12">
+      <soap12:address location="http://localhost:5888/GrabNews.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
